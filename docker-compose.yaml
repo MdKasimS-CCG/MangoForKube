@@ -10,15 +10,15 @@ networks:
 services:
   mango-auth:
     build:
-      context: ./Backend/Mango.Services.AuthAPI
+      context: ./Mango.Services.AuthAPI
       dockerfile: Dockerfile
       secrets:
         - nugetconfig
-    image: hanna123vvvv/mango-authapi:latest
+    image: ${DOCKER_REGISTRY-}mangoauthapi
     container_name: mango-auth
 
     env_file:
-      - ./Backend/Mango.Services.AuthAPI/.env
+      - ./Mango.Services.AuthAPI/.env
     ports:
       - "5005:8080"
     networks:
@@ -26,56 +26,56 @@ services:
 
   mango-product:
     build:
-      context: ./Backend/Mango.Services.ProductAPI
+      context: ./Mango.Services.ProductAPI
       dockerfile: Dockerfile
-    image: hanna123vvvv/mango-productapi:latest
+    image: ${DOCKER_REGISTRY-}mangoproductapi
     container_name: mango-product
 
     env_file:
-      - ./Backend/Mango.Services.ProductAPI/.env
+      - ./Mango.Services.ProductAPI/.env
     ports:
       - "5156:8080"
     networks:
       - mango-network
 
-  mango.services.couponapi:
-    image: ${DOCKER_REGISTRY-}mangoservicescouponapi
-    container_name: mango.services.couponapi
+  mango-coupon:
+    image: ${DOCKER_REGISTRY-}mangocouponapi
+    container_name: mango-coupon
     build:
-      context: ./Backend/Mango.Services.CouponAPI
+      context: ./Mango.Services.CouponAPI
       dockerfile: Dockerfile
     env_file:
-      - ./Backend/Mango.Services.CouponAPI/.env
+      - ./Mango.Services.CouponAPI/.env
     ports:
       - "5104:8080"
       - "7001:8081"
     networks:
       - mango-network  
-
-  mango.services.rewardapi:
-    image: ${DOCKER_REGISTRY-}mangoservicesrewardapi
-    container_name: mango.services.rewardapi
+        
+  mango-reward:
+    image: ${DOCKER_REGISTRY-}mangorewardapi
+    container_name: mango-reward
     build:
-      context: ./Backend/Mango.Services.RewardAPI
+      context: ./Mango.Services.RewardAPI
       dockerfile: Dockerfile
     env_file:
-      - ./Backend/Mango.Services.RewardAPI/.env
+      - ./Mango.Services.RewardAPI/.env
     ports:
       - "5202:8080"
       - "7009:8081"
     networks:
       - mango-network
 
-  mango.services.orderapi:
-    image: ${DOCKER_REGISTRY-}mangoservicesorderapi
-    container_name: mango.services.orderapi
+  mango-order:
+    image: ${DOCKER_REGISTRY-}mangoorderapi
+    container_name: mango-order
     build:
-      context: ./Backend/Mango.Services.OrderAPI
+      context: ./Mango.Services.OrderAPI
       dockerfile: Dockerfile
       secrets:
         - nugetconfig
     env_file:
-      - ./Backend/Mango.Services.OrderAPI/.env
+      - ./Mango.Services.OrderAPI/.env
     ports:
       - "5201:8080"
       - "7004:8081"
@@ -83,30 +83,30 @@ services:
       - mango-network
 
   mango-email:
-    image: ${DOCKER_REGISTRY-}mangoservicesemailapi
+    image: ${DOCKER_REGISTRY-}mangoemailapi
     build:
-      context: ./Backend/Mango.Services.EmailAPI
+      context: ./Mango.Services.EmailAPI
       dockerfile: Dockerfile
       secrets:
         - nugetconfig
     container_name: mango-email
     env_file:
-      - ./Backend/Mango.Services.EmailAPI/.env
+      - ./Mango.Services.EmailAPI/.env
     ports:
       - "5216:8080"
     networks:
       - mango-network
 
   mango-shoppingcart:
-    image: ${DOCKER_REGISTRY-}mangoservicesshoppingcartapi
+    image: ${DOCKER_REGISTRY-}mangoshoppingcartapi
     build:
-      context: ./Backend/Mango.Services.ShoppingCartAPI
+      context: ./Mango.Services.ShoppingCartAPI
       dockerfile: Dockerfile
       secrets:
         - nugetconfig
     container_name: mango-shoppingcart
     env_file:
-      - ./Backend/Mango.Services.ShoppingCartAPI/.env
+      - ./Mango.Services.ShoppingCartAPI/.env
     ports:
       - "5220:8080"
     networks:
@@ -115,11 +115,11 @@ services:
   mango-web:
     image: ${DOCKER_REGISTRY-}mangoweb
     build:
-      context: ./Frontend/Mango.Web
+      context: ./Mango.Web
       dockerfile: Dockerfile
     container_name: mango-web
     env_file:
-      - ./Frontend/Mango.Web/.env
+      - ./Mango.Web/.env
     ports:
       - "5048:8080"
     networks:
